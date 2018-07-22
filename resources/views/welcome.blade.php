@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Hola como estas
+                    nueva version
                 </div>
 
                 <div class="links">
