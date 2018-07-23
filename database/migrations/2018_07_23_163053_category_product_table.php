@@ -17,8 +17,8 @@ class CategoryProductTable extends Migration
             //Como es una tabla pivote no es necesario id ni timestamps
             /* $table->increments('id');
             $table->timestamps(); */
-            $table->foreign('category_id')->unsigned();
-            $table->foreign('product_id')->unsigned();
+            $table->integer('category_id')->unsigned();
+            $table->integer('product_id')->unsigned();
 
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('product_id')->references('id')->on('products');
