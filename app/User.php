@@ -24,12 +24,31 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 
-        'email', 
+        'email',  
         'password',
         'verified',
         'verification_token',
         'admin',
     ];
+    //mutador
+    public function setNameAttribute($valor)
+    {
+        $this->attributes['name']= strtolower($valor);
+    }
+
+    public function setEmailAttribute($valor)
+    {
+        $this->attributes['email']= strtolower($valor);
+    }
+
+    //ascensor
+    public function getNameAttribute($valor)
+    {
+        //convierte la primera letra de la oracion en mayuscula
+        //return ucfirst($valor);
+        //convierte la primera letra de cada oracion en mayuscula
+        return ucwords($valor);
+    }
 
     /**
      * The attributes that should be hidden for arrays.
