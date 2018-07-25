@@ -19,8 +19,9 @@ class UserController extends ApiController
         $usuarios = User::all();
         
         //Dentro de data se guarda los datos de usuarios, como raiz data
-        return response()->json(['data'=>$usuarios],200);
+        //return response()->json(['data'=>$usuarios],200);
         //return $usuarios;
+        return $this->showAll($usuarios); 
     }
 
 
@@ -48,7 +49,8 @@ class UserController extends ApiController
 
         $usuario = User::create($campos);
         //respuesta 201
-        return response()->json(['data'=>$usuario],201);
+        //return response()->json(['data'=>$usuario],201);
+        return $this->showOne($usuario,201);
     }
 
     /**
@@ -61,7 +63,7 @@ class UserController extends ApiController
     {
         $usuario= User::findOrFail($id);
         
-        return response()->json(['data'=>$usuario],200);
+        return $this->showOne($usuario);
     }
     
     /**
@@ -112,7 +114,7 @@ class UserController extends ApiController
 
         $user->save();
 
-        return response()->json(['data'=>$user],200);
+        return $this->showOne($user);
     }
 
     /**
@@ -126,6 +128,6 @@ class UserController extends ApiController
         $user = User::findOrFail($id);
         $user->delete();
 
-        return response()->json(['data'=>$user], 200);
+        return $this->showOne($user);
     }
 }
