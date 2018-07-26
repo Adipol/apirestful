@@ -11,6 +11,7 @@ use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
 class Handler extends ExceptionHandler
@@ -81,6 +82,11 @@ class Handler extends ExceptionHandler
         //405 metodo no permitido
         if($exception instanceof MethodNotAllowedHttpException){
             return $this->errorResponse('El método espeficicado en la peticion no es válido.', 405);
+        }
+        
+        //mensajes ante cualquier tipo de excepxion HTTP
+        if($exception instanceof HttpException){
+            return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
         }
 
         return parent::render($request, $exception);
