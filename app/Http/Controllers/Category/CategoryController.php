@@ -58,7 +58,35 @@ class CategoryController extends ApiController
      */
     public function update(Request $request, Category $category)
     {
-        //
+        /* metodo "Fill" significa literalmente "llenar". Cuando se utiliza el método fill() en un modelo, establece los atributos del modelo a los que le pasemos como argumento en un array. Un ejemplo y quedará claro:
+
+        $user = new User();
+
+        $user->fill([
+            'username' => 'IsraelOrtuno',
+            'email' => 'laraveles@mail.com'
+        ]);
+
+        Esto sería el equivalente a hacer
+
+        $user = new User();
+
+        $user->username = 'IsraelOrtuno';
+        $user->email = 'laraveles@mail.com'; */
+
+        $category->fill($request->only([
+            'name',
+            'description',
+        ]));
+
+        //isDirty si la instanacia a cambioado, isClean si la instancia no a cambiado
+        if($category->isClean()){
+            return $this->errorResponse('Debe especificar al menos un valor diferente para actualizar', 422);
+        }
+
+        $category->save();
+
+        return $this->showOne($category);
     }
 
     /**
