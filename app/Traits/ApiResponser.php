@@ -12,7 +12,7 @@ trait ApiResponser
     return response()->json($data, $code);
   }
 
-    // se creara una funcion protegido para las respuestas
+  // se creara una funcion protegido para las respuestas
   protected function errorResponse($message, $code)
   {
     return response()->json(['error' => $message, 'code' => $code], $code);
