@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SellerScope implements Scope
 {
-    public function apply(Builder $builer, Model $model)
+    public function apply(Builder $builder, Model $model)
     {
         $builder->has('products');
     }
