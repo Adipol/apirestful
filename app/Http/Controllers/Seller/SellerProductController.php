@@ -42,4 +42,53 @@ class SellerProductController extends ApiController
 
         return $this->showOne($product, 201);
     }
+
+    public function update(Request $request, Seller $seller, Product $product)
+    {
+        $rules =[
+            'quantity'=> 'integer|min:1',
+            'status'=>'in: ' . Product::PRODUCTO_DISPONIBLE . ',' . Product::PRODUCTO_NO_DISPONIBLE,            
+        ];
+
+        $this->validate($request, $rules);
+        $this->verificarVendedor($seller, $product);
+
+        $product->fill($request->only(
+            ['name',
+            'description',
+            'quantity',]
+        ));
+
+        if ($request->has('status')) {
+            $product->status= $request->status;
+            if($product->estaDisponible() && $product->categories()->count() == 0) {
+                return $this->errorResponse('Un producto activo debe tener al menos uan categoria.' , 409);
+            }
+        }
+
+        if ($product->isClean()) {
+            return $this->errorResponse('se debe especificar al menos un valor diferente para actualizar.', 422);
+        }
+
+        $product->save();
+
+        return $this->showOne($product);
+    }
+
+    public function destroy(Seller $seller,Product $product)
+    {
+        $this->verificarVendedor($seller, $product);
+
+        $product->delete();
+
+        return $this->showOne($product);
+    }
+
+    protected function verificarVendedor(Seller $seller, Product $product)
+    {
+        if($seller->id != $product->seller_id){
+            throw new HttpException(422, 'El vendedor especificado no es el vendedor real del producto.');
+        }
+    }
 }
+
