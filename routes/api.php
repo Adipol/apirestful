@@ -36,7 +36,7 @@ Route::resource('categories.transactions', 'Category\CategoryTransactionControll
  * Products
  */
 Route::resource('products', 'Product\ProductController',['only'=>['index','show']]);
-Route::resource('products.categories', 'Product\ProductCategoryController',['only'=>['index','update']]);
+Route::resource('products.categories', 'Product\ProductCategoryController',['only'=>['index','update','destroy']]);
 Route::resource('products.transactions', 'Product\ProductTransactionController',['only'=>['index']]);
 Route::resource('products.buyers', 'Product\ProductBuyerController',['only'=>['index']]);
 
