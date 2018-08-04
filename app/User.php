@@ -32,7 +32,19 @@ class User extends Authenticatable
         'verified',
         'verification_token',
         'admin',
+    ];   
+    
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+        /* 'verification_token', */
     ];
+
     //mutador
     public function setNameAttribute($valor)
     {
@@ -53,16 +65,7 @@ class User extends Authenticatable
         return ucwords($valor);
     }
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'verification_token',
-    ];
+
 
     public function esVerificado()
     {
