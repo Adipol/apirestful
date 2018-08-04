@@ -30,6 +30,6 @@ class userCreated extends Mailable
      */
     public function build()
     {
-        return $this->text('email.welcome');
+        return $this->text('email.welcome')->subject('Por fravor confirma tu correo electronico.');
     }
 }

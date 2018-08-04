@@ -26,6 +26,12 @@ class DatabaseSeeder extends Seeder
         Transaction::truncate();
         DB::table('category_product')->truncate();
 
+        //Me ayudara para que los eventos al comienzo no se activen
+        User::flushEventListeners();
+        Category::flushEventListeners();
+        Product::flushEventListeners();
+        Transaction::flushEventListeners();
+
         $catidadUsuarios       = 200;
         $cantidadCategorias    = 30;
         $cantidadProductos     = 500;
