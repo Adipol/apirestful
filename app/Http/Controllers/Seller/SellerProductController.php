@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\Product;
 use App\User;
+use Illuminate\Support\Facades\Storage;
 
 class SellerProductController extends ApiController
 {
@@ -78,6 +79,8 @@ class SellerProductController extends ApiController
     public function destroy(Seller $seller,Product $product)
     {
         $this->verificarVendedor($seller, $product);
+        
+        Storage::delete($product->image);
 
         $product->delete();
 
