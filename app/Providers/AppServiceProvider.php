@@ -24,6 +24,14 @@ class AppServiceProvider extends ServiceProvider
             Mail::to($user)->send(new userCreated($user));
         });
 
+        User::updated(function($user){
+            //si isDirty() esta vacio comprueba cada atributo si hubo almenos uno que se modifico
+            if ($user->isDirty('email')) {
+                Mail::to($user)->send(new userCreated($user));
+            }
+            
+        });
+
         Product::updated(function($product){
             if($product->quantity == 0 && $product->estaDisponible()) {
                 $product->status = Product::PRODUCTO_NO_DISPONIBLE;
