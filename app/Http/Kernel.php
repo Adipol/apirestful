@@ -38,6 +38,8 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            //se genera la firma a las cabeceras de las solicitudes
+            'signature:X-Application-Name',
             'throttle:60,1',
             'bindings',
         ],
@@ -59,5 +61,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'signature'=> \App\Http\Middleware\SignatureMiddleware::class,
     ];
 }
