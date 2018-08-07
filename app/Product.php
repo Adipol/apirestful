@@ -7,11 +7,14 @@ use App\Transaction;
 use App\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Transformers\ProductTransformer;
 
 class Product extends Model
 {
     const PRODUCTO_DISPONIBLE = 'disponible';
     const PRODUCTO_NO_DISPONIBLE ='no disponible';
+
+    public $transformer = ProductTransformer::class;
 
     use SoftDeletes;
     
