@@ -100,8 +100,17 @@ trait ApiResponser
   protected function cacheResponse($data)
   {
     $url =request()->url();
+    //parametros de url
+    $queryParams = request()->query();
+    //ordena un array de un url
+    ksort($queryParams);
+    //construir el query string aparatir del array ordenado
+    $queryString = http_build_query($queryParams);
+    //url completa
+		$fullUrl = "{$url}?{$queryString}";
+
     //Se coloco 15/60 por que se mide en seg=30seg
-    return Cache::remember($url, 15/60, function() use($data){
+    return Cache::remember($fullUrl, 15/60, function() use($data){
       return $data;
     });
   } 
