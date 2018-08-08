@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Seller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ApiController;
@@ -15,7 +16,7 @@ class SellerController extends ApiController
      */
     public function index()
     {
-        $vendedores = Buyer::has('products')->get();
+        $vendedores = Seller::has('products')->get();
 
         return $this->showAll($vendedores); 
     }
