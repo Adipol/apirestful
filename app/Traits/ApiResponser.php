@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cache;
 
 trait ApiResponser
 {
@@ -32,6 +33,7 @@ trait ApiResponser
     //Paginación
     $collection = $this->paginate($collection);
     $collection = $this->transformData($collection, $transformer);
+    $collection = $this->cacheResponse($collection);
 
     return $this->successResponse($collection, $code);
   }
@@ -93,4 +95,14 @@ trait ApiResponser
 
     return $transformation->toArray();
   }
+
+  //el cache nos ayudara para que la carha se controle 
+  protected function cacheResponse($data)
+  {
+    $url =request()->url();
+    //Se coloco 15/60 por que se mide en seg=30seg
+    return Cache::remember($url, 15/60, function() use($data){
+      return $data;
+    });
+  } 
 }
